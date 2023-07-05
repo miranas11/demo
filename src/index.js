@@ -1,17 +1,55 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "../src/styles/index.css";
+import "../src/styles/modern-normalize.css";
+import "../src/styles/login.css";
+import "../src/styles/header.css";
+import "../src/styles/body.css";
+import "../src/styles/sidebar.css";
+import "../src/styles/createEmployee.css";
+import "../src/styles/searchEmployee.css";
+import "./styles/utils.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Login from "./components/Login";
+import Main from "./components/Main";
+import Home from "./components/Home";
+import CreateEmployee from "./components/CreateEmployee";
+import SearchEmployee from "./components/SearchEmployee";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+const appRouter = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />,
+        children: [
+            {
+                path: "/",
+                element: <Login />,
+            },
+            {
+                path: "/home",
+                element: <Main />,
+                children: [
+                    {
+                        path: "index",
+                        element: <Home />,
+                    },
+                    {
+                        path: "employee/create",
+                        element: <CreateEmployee />,
+                    },
+                    {
+                        path: "employee/search",
+                        element: <SearchEmployee />,
+                    },
+                ],
+            },
+        ],
+    },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<RouterProvider router={appRouter} />);
 reportWebVitals();
